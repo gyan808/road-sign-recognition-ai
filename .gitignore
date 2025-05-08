@@ -1,0 +1,35 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.ipynb_checkpoints
+
+# Jupyter Notebook checkpoint files
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+env/
+
+# VS Code
+.vscode/
+
+# MacOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# Dataset files
+dataset/
+
+# Trained models
+model/*.h5
+model/*.pth
+model/*.pt
+
+# Log files and checkpoints
+*.log
+*.ckpt
+
+# Python virtual environment files
+*.egg-info/
