@@ -1,20 +1,30 @@
+import os
+# Suppress TensorFlow's information and warning logs
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+import tensorflow as tf
+from sklearn.model_selection import train_test_split
 from utils.preprocess import load_data
 from utils.train import train_model
 from utils.test import evaluate_model
-import os
 
-data_path = os.path.join("dataset", "GTSRB", "Final_Training", "Images")
-X, y = load_data(data_path)
-print("Data loaded:", X.shape, y.shape)
+# Specify paths to the dataset and the generated CSV file
+data_path = r"C:\Users\gyane\Desktop\road-sign-detection-ai\dataset\GTSRB\Training"
+labels_csv = r"C:\Users\gyane\Desktop\road-sign-detection-ai\dataset\GT-final_train.csv"
 
-# Normalize pixel values
-X = X / 255.0
+# Load the data
+X, y = load_data(data_path, labels_csv)
+
+# Normalize the images
+X = X / 255.0  # Normalize pixel values to [0, 1]
+
+# Split the data into training and testing sets (80% train, 20% test)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+print(f"Training data: {X_train.shape}, Test data: {X_test.shape}")
 
 # Train the model
-model = train_model(X, y)
+model = train_model(X_train, y_train, X_test, y_test)
 
-# Optional: Save model
-model.save("model/road_sign_model.h5")
-
-# Evaluate (you can use the same data or split a test set separately)
-evaluate_model(model, X, y)
+# Evaluate the model
+evaluate_model(model, X_test, y_test)
